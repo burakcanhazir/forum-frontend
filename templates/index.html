@@ -9,22 +9,33 @@
 <body>
     <div class="header">
         <div class="button-container">
-            <button class="nav-button">HTML</button>
-            <button class="nav-button">CSS</button>
-            <button class="nav-button">PYTHON</button>
-            <button class="nav-button">C</button>
-            <button class="nav-button">C#</button>
-            <button class="nav-button">C++</button>
-            <button class="nav-button">GO</button>
-            <button class="nav-button">JS</button>
-            <button class="nav-button">JAVA</button>
-            <button class="nav-button">REACT</button>
-            <button class="nav-button">FLUTTER</button>
+            <!-- Form başlangıcı -->
+            <form id="categoryForm" onsubmit="return submitForm(event)">
+                <button class="nav-button" name="id" value="HTML">HTML</button>
+                <button class="nav-button" name="id" value="CSS">CSS</button>
+                <button class="nav-button" name="id" value="PYTHON">PYTHON</button>
+                <button class="nav-button" name="id" value="C">C</button>
+                <button class="nav-button" name="id" value="C#">C#</button>
+                <button class="nav-button" name="id" value="C++">C++</button>
+                <button class="nav-button" name="id" value="GO">GO</button>
+                <button class="nav-button" name="id" value="javascript">javascript</button>
+                <button class="nav-button" name="id" value="java">java</button>
+                <button class="nav-button" name="id" value="REACT">REACT</button>
+                <button class="nav-button" name="id" value="FLUTTER">FLUTTER</button>
+            </form>
+            <!-- Form bitişi -->
         </div>
         <div class="sign-in">
             <button class="account-button" onclick="showLogin()">Login</button>
             <button class="account-button" onclick="showRegister()">Register</button>
-            <button class="account-button">Hesabım</button>
+            <div class="dropdown">
+                <button class="account-button">Hesabım</button>
+                <div class="dropdown-content">
+                    <a href="#">Beğendiklerim</a>
+                    <a href="#">Gönderilerim</a>
+                    <a href="#">Çıkış</a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -61,6 +72,21 @@
         </div>
     </div>
 
+    <!-- Register Modal -->
+    <div class="Register-modal" id="RegisterModal">
+        <div class="Register-box">
+            <h2>Register</h2>
+            <label for="name">Name</label>
+            <input type="text" id="register-name" placeholder="Enter your name">
+            <label for="email">Email</label>
+            <input type="text" id="register-email" placeholder="Enter your Email">
+            <label for="password">Password</label>
+            <input type="password" id="register-password" placeholder="Enter your password">
+            <button onclick="submitRegister()">Submit</button>
+            <button class="close-button" onclick="closeRegister()">Close</button>
+        </div>
+    </div>
+
     <script>
         // Login modal'ı göster
         function showLogin() {
@@ -74,107 +100,144 @@
 
         // Login formunu gönder
         function submitLogin() {
-    const name = document.getElementById("name").value;
-    const password = document.getElementById("password").value;
+            const name = document.getElementById("name").value;
+            const password = document.getElementById("password").value;
 
-    if (name && password) {
-        const data = {
-            name: name,
-            password: password
-        };
+            if (name && password) {
+                const data = { name: name, password: password };
 
-        fetch('http://localhost:8000/api/v1/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+                fetch('http://localhost:8000/api/v1/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.json();
+                })
+                .then(data => {
+                    alert('Login successful!');
+                    closeLogin();
+                })
+                .catch(error => {
+                    alert('Error: ' + error.message);
+                });
+            } else {
+                alert("Please enter both name and password.");
             }
+        }
+
+        // Register modal'ı göster
+        function showRegister() {
+            document.getElementById("RegisterModal").style.display = "flex";
+        }
+
+        // Register modal'ı kapat
+        function closeRegister() {
+            document.getElementById("RegisterModal").style.display = "none";
+        }
+
+        // Register formunu gönder
+        function submitRegister() {
+            const name = document.getElementById("register-name").value;
+            const email = document.getElementById("register-email").value;
+            const password = document.getElementById("register-password").value;
+
+            if (name && email && password) {
+                const data = { name: name, email: email, password: password };
+
+                fetch('http://localhost:8000/api/v1/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.json();
+                })
+                .then(data => {
+                    alert('Register successful!');
+                    closeRegister();
+                })
+                .catch(error => {
+                    alert('Error: ' + error.message);
+                });
+            } else {
+                alert("Please enter name, email, and password.");
+            }
+        }
+
+        function submitForm(event) {
+    event.preventDefault(); // Formun normal submit işlemini engelle
+
+    // Tıklanan butonun value'sini al
+    const clickedButton = event.submitter;
+    const categoryId = clickedButton.value;
+
+    // Dinamik URL oluştur
+    const url = `http://localhost:8000/api/v1/getcategoriespost/${categoryId}`;
+
+    // API'den veri çek
+    fetch(url)
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
             return response.json();
         })
-        .then(data => {
-            alert('Login successful!');
-            closeLogin();
+        .then(posts => {
+            updatePosts(posts); // Postları güncelle
         })
-        .catch((error) => {
-            alert('Error: ' + error.message);
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Bir hata oluştu: ' + error.message);
+        });
+
+    return false; // Formun normal davranışını engelle
+}
+function updatePosts(posts) {
+    const postsContainer = document.getElementById("posts");
+    postsContainer.innerHTML = ''; // Eski postları temizle
+
+    // Eğer posts null veya undefined ise, boş bir dizi oluştur
+    if (!posts || !Array.isArray(posts)) {
+        posts = [];
+    }
+
+    if (posts.length > 0) {
+        posts.forEach(post => {
+            const postElement = `
+                <div class="post">
+                    <h2>${post.title || "Başlık Yok"}</h2>
+                    <p>${post.content || "İçerik Yok"}</p>
+                    <div class="post-interactions">
+                        <button class="like-button">Like</button>
+                        <span class="like-count">0</span>
+                        <button class="comment-button">Comment</button>
+                        <span class="comment-count">0</span>
+                    </div>
+                </div>
+            `;
+            postsContainer.innerHTML += postElement; // Postu sayfaya ekle
         });
     } else {
-        alert("Please enter both name and password.");
+        postsContainer.innerHTML = "<p>No posts available.</p>";
     }
 }
+fetch(url)
+    .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+    })
+    .then(posts => {
+        console.log(posts); // Yanıtı konsola yazdır
+        updatePosts(posts); // Postları güncelle
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Bir hata oluştu: ' + error.message);
+    });
 
+
+ 
     </script>
-
-        <!-- Register Modal -->
-        <div class="Register-modal" id="RegisterModal">
-            <div class="Register-box">
-                <h2>Register</h2>
-                <label for="name">Name</label>
-                <input type="text" id="register-name" placeholder="Enter your name">
-                <label for="email">Email</label>
-                <input type="text" id="register-email" placeholder="Enter your Email">
-                <label for="password">Password</label>
-                <input type="password" id="register-password" placeholder="Enter your password">
-                <button onclick="submitRegister()">Submit</button>
-                <button class="close-button" onclick="closeRegister()">Close</button>
-            </div>
-        </div>
-
-        <script>
-            // REGİSTER modal'ı göster
-            function showRegister() {
-                document.getElementById("RegisterModal").style.display = "flex";
-            }
-    
-            // Register modal'ı kapat
-            function closeRegister() {
-                document.getElementById("RegisterModal").style.display = "none";
-            }
-    
-            //Register formunu gönder
-            function submitRegister() {
-        const name = document.getElementById("register-name").value;
-        const email = document.getElementById("register-email").value;
-        const password = document.getElementById("register-password").value;
-    
-        if (name && email && password) {
-            const data = {
-                name: name,
-                email:email,
-                password: password
-            };
-    
-            fetch('http://localhost:8000/api/v1/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                alert('Register successful!');
-                closeRegister();
-            })
-            .catch((error) => {
-                alert('Error: ' + error.message);
-            });
-        } else {
-            alert("Please enter name, email, and password.");
-
-        }
-    }
-    
-        </script>
 </body>
 </html>

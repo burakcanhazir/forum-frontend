@@ -178,3 +178,49 @@ body {
     background-color: #dc3545;
     margin-top: 10px;
 }
+  /* Butonların yan yana gelmesi için flexbox düzeni */
+  .sign-in {
+    display: flex;
+    gap: 10px; /* Butonlar arasında boşluk */
+    align-items: center;
+    max-width: 100%; /* Genişlik sınırı */
+    overflow: hidden; /* Taşmayı önle */
+    flex-wrap: nowrap; /* Taşmayı önle */
+}
+
+
+hesabım 
+
+/* Dropdown menü için stil */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    max-width: 100%; /* Genişlik sınırı */
+    overflow: hidden;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    max-width: 100%; /* Genişlik sınırı */
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
