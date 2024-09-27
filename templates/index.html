@@ -31,8 +31,10 @@
             <div class="dropdown">
                 <button class="account-button">Hesabım</button>
                 <div class="dropdown-content">
-                    <a href="#">Beğendiklerim</a>
-                    <a href="#">Gönderilerim</a>
+                    <button class="account-button" onclick="fetchLikedPosts()">Beğendiklerim</button> 
+                    <button class="account-button" onclick="myPosts()">Gönderilerim</button>
+                   
+                    
                     <a href="#">Çıkış</a>
                 </div>
             </div>
@@ -109,6 +111,7 @@
                 fetch('http://localhost:8000/api/v1/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',  // Cookie kullanımı için gerekli
                     body: JSON.stringify(data),
                 })
                 .then(response => {
@@ -117,7 +120,7 @@
                 })
                 .then(data => {
                     alert('Login successful!');
-                    closeLogin();
+                    closeLogin(); // Login modalını kapat
                 })
                 .catch(error => {
                     alert('Error: ' + error.message);
@@ -168,34 +171,81 @@
         }
 
         function submitForm(event) {
-    event.preventDefault(); // Formun normal submit işlemini engelle
+            event.preventDefault(); // Formun normal submit işlemini engelle
 
-    // Tıklanan butonun value'sini al
-    const clickedButton = event.submitter;
-    const categoryId = clickedButton.value;
+            // Tıklanan butonun value'sini al
+            const clickedButton = event.submitter;
+            const categoryId = clickedButton.value;
 
-    // Dinamik URL oluştur
-    const url = `http://localhost:8000/api/v1/getcategoriespost/${categoryId}`;
+            // Dinamik URL oluştur
+            const url = `http://localhost:8000/api/v1/getcategoriespost/${categoryId}`;
 
-    // API'den veri çek
-    fetch(url)
+            // API'den veri çek
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.json();
+                })
+                .then(posts => {
+                    updatePosts(posts); // Postları güncelle
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Bir hata oluştu: ' + error.message);
+                });
+
+            return false; // Formun normal davranışını engelle
+        }
+
+        function updatePosts(posts) {
+            const postsContainer = document.getElementById("posts");
+            postsContainer.innerHTML = ''; // Eski postları temizle
+
+            // Eğer posts null veya undefined ise, boş bir dizi oluştur
+            if (!posts || !Array.isArray(posts)) {
+                posts = [];
+            }
+
+            if (posts.length > 0) {
+                posts.forEach(post => {
+                    const postElement = `
+                        <div class="post">
+                            <h2>${post.title || "Başlık Yok"}</h2>
+                            <p>${post.content || "İçerik Yok"}</p>
+                            <div class="post-interactions">
+                                <button class="like-button" onclick="likePost('${post.id}')">Like</button>
+                                <span class="like-count">${post.likeCount || 0}</span>
+                                <button class="comment-button">Comment</button>
+                                <span class="comment-count">${post.commentCount || 0}</span>
+                            </div>
+                        </div>`;
+                    postsContainer.innerHTML += postElement; // Yeni postu ekle
+                });
+            } else {
+                postsContainer.innerHTML = '<p>No posts available.</p>'; // Mesaj göster
+            }
+        }
+
+        function fetchLikedPosts() {
+        fetch('http://localhost:8000/api/v1/mylikes', {
+            method: 'GET',
+            credentials: 'include',  // Token'ı dahil etmek için
+        })
         .then(response => {
-            if (!response.ok) throw new Error('Network response was not ok');
+            if (!response.ok) throw new Error('Veri alınamadı');
             return response.json();
         })
-        .then(posts => {
-            updatePosts(posts); // Postları güncelle
+        .then(data => {
+            displayLikedPosts(data);
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Bir hata oluştu: ' + error.message);
         });
+    }
 
-    return false; // Formun normal davranışını engelle
-}
-function updatePosts(posts) {
+    function displayLikedPosts(posts) {
     const postsContainer = document.getElementById("posts");
-    postsContainer.innerHTML = ''; // Eski postları temizle
+    postsContainer.innerHTML = "";  // Önceki içerikleri temizler
 
     // Eğer posts null veya undefined ise, boş bir dizi oluştur
     if (!posts || !Array.isArray(posts)) {
@@ -209,35 +259,37 @@ function updatePosts(posts) {
                     <h2>${post.title || "Başlık Yok"}</h2>
                     <p>${post.content || "İçerik Yok"}</p>
                     <div class="post-interactions">
-                        <button class="like-button">Like</button>
-                        <span class="like-count">0</span>
+                        <button class="like-button" onclick="likePost('${post.id}')">Like</button>
+                        <span class="like-count">${post.likeCount || 0}</span>
                         <button class="comment-button">Comment</button>
-                        <span class="comment-count">0</span>
+                        <span class="comment-count">${post.commentCount || 0}</span>
                     </div>
-                </div>
-            `;
-            postsContainer.innerHTML += postElement; // Postu sayfaya ekle
+                </div>`;
+            postsContainer.innerHTML += postElement; // Yeni postu ekle
         });
     } else {
-        postsContainer.innerHTML = "<p>No posts available.</p>";
+        postsContainer.innerHTML = '<p>No liked posts available.</p>'; // Mesaj göster
     }
 }
-fetch(url)
-    .then(response => {
-        if (!response.ok) throw new Error('Network response was not ok');
-        return response.json();
-    })
-    .then(posts => {
-        console.log(posts); // Yanıtı konsola yazdır
-        updatePosts(posts); // Postları güncelle
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Bir hata oluştu: ' + error.message);
-    });
+//devam edilecek buradan.
+function myPosts() {
+        fetch('http://localhost:8000/api/v1/mylikes', {
+            method: 'GET',
+            credentials: 'include',  // Token'ı dahil etmek için
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Veri alınamadı');
+            return response.json();
+        })
+        .then(data => {
+            displayLikedPosts(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
 
 
- 
     </script>
 </body>
 </html>

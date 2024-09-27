@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beğendiklerim</title>
+    <link rel="stylesheet" href="/style/mylikepost.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Beğendiklerim</h1>
+        <button class="account-button" onclick="goBack()">Geri Dön</button>
+    </div>
+
+    <div class="content">
+        <h1>POSTS</h1>
+        <div id="posts"></div> <!-- Beğenilen gönderiler buraya gelecek -->
+    </div>
+
+    <script>
+        function fetchUserLikedPosts() {
+            fetch('http://localhost:8000/api/v1/mylikes', { // Backend endpoint
+                method: 'GET',
+                credentials: 'include', // Çerezlerin gönderilmesini sağlar
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                return response.json(); // Gelen yanıtı JSON'a çevir
+            })
+            .then(data => {
+                console.log(data); // Gelen beğenilen gönderileri konsola yazdır
+                displayLikedPosts(data); // Gönderileri kullanıcı arayüzünde göster
+            })
+            .catch(error => {
+                console.error('Error fetching liked posts:', error); // Hata durumunu konsola yazdır
+            });
+        }
+
+        function displayLikedPosts(posts) {
+            const postsContainer = document.getElementById('posts'); // Doğru id'yi kullan
+
+            // Önceki gönderileri temizle
+            postsContainer.innerHTML = '';
+
+            // Her bir gönderiyi DOM'a ekle
+            posts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.className = 'post';
+                postElement.innerHTML = `
+                    <h3>${post.title}</h3>
+                    <p>${post.content}</p>
+                `;
+                postsContainer.appendChild(postElement);
+            });
+        }
+
+        function goBack() {
+            window.history.back(); // Kullanıcıyı bir önceki sayfaya döndür
+        }
+
+        // Kullanıcı beğendiği gönderileri almak için fonksiyonu çağır
+        fetchUserLikedPosts();
+    </script>
+</body>
+</html>
