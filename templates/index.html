@@ -273,7 +273,7 @@
 }
 //devam edilecek buradan.
 function myPosts() {
-        fetch('http://localhost:8000/api/v1/mylikes', {
+        fetch(`http://localhost:8000/api/v1/users/getpost`, {
             method: 'GET',
             credentials: 'include',  // Token'ı dahil etmek için
         })
