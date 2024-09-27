@@ -33,9 +33,7 @@
                 <div class="dropdown-content">
                     <button class="account-button" onclick="fetchLikedPosts()">Beğendiklerim</button> 
                     <button class="account-button" onclick="myPosts()">Gönderilerim</button>
-                   
-                    
-                    <a href="#">Çıkış</a>
+                    <button class="account-button" onclick="logoutaccount()">Çıkış</button>
                 </div>
             </div>
         </div>
@@ -288,7 +286,23 @@ function myPosts() {
             console.error('Error:', error);
         });
     }
-
+    function logoutaccount() {
+    fetch('http://localhost:8000/api/v1/logout', {
+        method: 'POST',
+        credentials: 'include',  // Token'ı dahil etmek için
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('Veri alınamadı');
+        return response.text();  // veya response.json() döndüğünü kontrol et
+    })
+    .then(() => {
+        alert('Başarıyla çıkış yaptınız.');
+        window.location.href = '/login';  // Örneğin login sayfasına yönlendir //bunun hepsinde olması lazım
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
 
     </script>
 </body>
