@@ -37,7 +37,10 @@
                 </div>
             </div>
         </div>
+        
     </div>
+     <a href="createpost" class="floating-btn">+</a>
+    
 
     <div class="content">
         <h1>POSTS</h1>
@@ -234,14 +237,66 @@
             return response.json();
         })
         .then(data => {
-            displayLikedPosts(data);
+            if (data.length === 0) {  // Eğer beğenilen post yoksa
+                displayMessage("You haven't liked any posts yet.");
+            }else {
+                displayLikedPosts(data);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            displayLikedPosts([]);
+        });
+    }
+
+    function displayLikedPosts(posts) {
+    const postsContainer = document.getElementById("posts");
+    postsContainer.innerHTML = "";  // Önceki içerikleri temizler
+
+    // Eğer posts null veya undefined ise, boş bir dizi oluştur
+    if (!posts || !Array.isArray(posts)) {
+        posts = [];
+    }
+
+    // Boş post kontrolü
+    if (posts.length === 0) {
+        postsContainer.innerHTML = '<p>No liked posts available.</p>'; // Mesaj göster
+    } else {
+        posts.forEach(post => {
+            const postElement = `
+                <div class="post">
+                    <h2>${post.title || "Başlık Yok"}</h2>
+                    <p>${post.content || "İçerik Yok"}</p>
+                    <div class="post-interactions">
+                        <button class="like-button" onclick="likePost('${post.id}')">Like</button>
+                        <span class="like-count">${post.likeCount || 0}</span>
+                        <button class="comment-button">Comment</button>
+                        <span class="comment-count">${post.commentCount || 0}</span>
+                    </div>
+                </div>`;
+            postsContainer.innerHTML += postElement; // Yeni postu ekle
+        });
+    }
+}
+
+//devam edilecek buradan.
+function myPosts() {
+        fetch(`http://localhost:8000/api/v1/users/getpost`, {
+            method: 'GET',
+            credentials: 'include',  // Token'ı dahil etmek için
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Veri alınamadı');
+            return response.json();
+        })
+        .then(data => {
+            displaymyPosts(data);
         })
         .catch(error => {
             console.error('Error:', error);
         });
     }
-
-    function displayLikedPosts(posts) {
+    function displaymyPosts(posts) {
     const postsContainer = document.getElementById("posts");
     postsContainer.innerHTML = "";  // Önceki içerikleri temizler
 
@@ -266,26 +321,9 @@
             postsContainer.innerHTML += postElement; // Yeni postu ekle
         });
     } else {
-        postsContainer.innerHTML = '<p>No liked posts available.</p>'; // Mesaj göster
+        postsContainer.innerHTML = '<p>No saved posts available.</p>'; // Mesaj göster
     }
 }
-//devam edilecek buradan.
-function myPosts() {
-        fetch(`http://localhost:8000/api/v1/users/getpost`, {
-            method: 'GET',
-            credentials: 'include',  // Token'ı dahil etmek için
-        })
-        .then(response => {
-            if (!response.ok) throw new Error('Veri alınamadı');
-            return response.json();
-        })
-        .then(data => {
-            displayLikedPosts(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
     function logoutaccount() {
     fetch('http://localhost:8000/api/v1/logout', {
         method: 'POST',
