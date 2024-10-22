@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Post</title>
+    <link rel="stylesheet" href="/style/styles.css">
+</head>
+<body>
+    <div class="post-container">
+        <h1>User Post</h1>
+        <!-- Eğer gönderi yoksa kullanıcıya bilgi göster -->
+        {{if not .Post.ID}}
+            <p>No post found.</p>
+        {{else}}
+            <!-- Tek bir gönderi göster -->
+            <div class="post">
+                <h2>{{.Post.Title}}</h2>
+                <p>{{.Post.Content}}</p>
+                <span>Post ID: {{.Post.ID}}</span>
+                <p>Likes: {{.Post.Likes.Int64}}</p> <!-- sql.NullInt64 kullanıyorsun, bu yüzden Null kontrolü gerekebilir -->
+            </div>
+        {{end}}
+    </div>
+</body>
+</html>

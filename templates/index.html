@@ -42,13 +42,16 @@
      <a href="createpost" class="floating-btn">+</a>
     
 
-    <div class="content">
+     <div class="content">
         <h1>POSTS</h1>
         <div id="posts">
             {{range .Posts}}
                 <div class="post">
-                    <h2>{{.Title}}</h2>
+                    <h2>
+                        <a href="/post/{{.PostID}}" onclick="handlePostClick(event, '{{.PostID}}')">{{.Title}}</a>
+                    </h2>
                     <p>{{.Content}}</p>
+                    <p>{{.PostID}}</p>
                     <div class="post-interactions">
                         <button class="like-button">Like</button>
                         <span class="like-count">0</span>
@@ -61,6 +64,7 @@
             {{end}}
         </div>
     </div>
+
 
     <!-- Login Modal -->
     <div class="login-modal" id="loginModal">
@@ -91,6 +95,17 @@
     </div>
 
     <script>
+        
+        function handlePostClick(event, postId) {
+            event.preventDefault(); // Normal link davranışını engelle
+            console.log('handlePostClick called with postId:', postId);
+
+            // Yeni URL'ye yönlendir
+            window.location.href = `http://localhost:8081/getpost?id=${postId}`;
+        }
+
+
+
         // Login modal'ı göster
         function showLogin() {
             document.getElementById("loginModal").style.display = "flex";
@@ -199,33 +214,37 @@
         }
 
         function updatePosts(posts) {
-            const postsContainer = document.getElementById("posts");
-            postsContainer.innerHTML = ''; // Eski postları temizle
+    const postsContainer = document.getElementById("posts");
+    postsContainer.innerHTML = ''; // Eski postları temizle
 
-            // Eğer posts null veya undefined ise, boş bir dizi oluştur
-            if (!posts || !Array.isArray(posts)) {
-                posts = [];
-            }
+    // Eğer posts null veya undefined ise, boş bir dizi oluştur
+    if (!posts || !Array.isArray(posts)) {
+        posts = [];
+    }
 
-            if (posts.length > 0) {
-                posts.forEach(post => {
-                    const postElement = `
-                        <div class="post">
-                            <h2>${post.title || "Başlık Yok"}</h2>
-                            <p>${post.content || "İçerik Yok"}</p>
-                            <div class="post-interactions">
-                                <button class="like-button" onclick="likePost('${post.id}')">Like</button>
-                                <span class="like-count">${post.likeCount || 0}</span>
-                                <button class="comment-button">Comment</button>
-                                <span class="comment-count">${post.commentCount || 0}</span>
-                            </div>
-                        </div>`;
-                    postsContainer.innerHTML += postElement; // Yeni postu ekle
-                });
-            } else {
-                postsContainer.innerHTML = '<p>No posts available.</p>'; // Mesaj göster
-            }
-        }
+    if (posts.length > 0) {
+        posts.forEach(post => {
+            const postElement = `
+                <div class="post">
+                    <h2>
+                        <a href="/post/${post.id}" onclick="handlePostClick(event, '${post.id}')">
+                            ${post.title || "Başlık Yok"}
+                        </a>
+                    </h2>
+                    <p>${post.content || "İçerik Yok"}</p>
+                    <div class="post-interactions">
+                        <button class="like-button" onclick="likePost('${post.id}')">Like</button>
+                        <span class="like-count">${post.likeCount || 0}</span>
+                        <button class="comment-button">Comment</button>
+                        <span class="comment-count">${post.commentCount || 0}</span>
+                    </div>
+                </div>`;
+            postsContainer.innerHTML += postElement; // Yeni postu ekle
+        });
+    } else {
+        postsContainer.innerHTML = '<p>No posts available.</p>'; // Mesaj göster
+    }
+}
 
         function fetchLikedPosts() {
         fetch('http://localhost:8000/api/v1/mylikes', {
@@ -281,7 +300,7 @@
 
 //devam edilecek buradan.
 function myPosts() {
-        fetch(`http://localhost:8000/api/v1/users/getpost`, {
+        fetch(`http://localhost:8000/api/v1/users/getpost/{id}`, {
             method: 'GET',
             credentials: 'include',  // Token'ı dahil etmek için
         })
