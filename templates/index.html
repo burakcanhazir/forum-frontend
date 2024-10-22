@@ -53,8 +53,8 @@
                     <p>{{.Content}}</p>
                     <p>{{.PostID}}</p>
                     <div class="post-interactions">
-                        <button class="like-button">Like</button>
-                        <span class="like-count">0</span>
+                        <button class="like-button" onclick="likePost('{{.PostID}}')">Like</button>
+                        
                         <button class="comment-button">Comment</button>
                         <span class="comment-count">0</span>
                     </div>
@@ -359,7 +359,33 @@ function myPosts() {
     .catch(error => {
         console.error('Error:', error);
     });
+} 
+function likePost(postId) {
+    const url = `http://localhost:8000/api/v1/${postId}/like`;
+    const data = { postId: postId };
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(data),
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('Like işlemi başarısız oldu.');
+        // Başarılı yanıtı işliyoruz
+        const likeCountElement = document.querySelector(`#post-${postId} .like-count`);
+        likeCountElement.textContent = parseInt(likeCountElement.textContent) + 1; // Like sayısını artırıyoruz
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Bir hata oluştu: ' + error.message);
+    });
 }
+
+
+
 
     </script>
 </body>
