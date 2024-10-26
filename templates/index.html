@@ -327,7 +327,7 @@ function myPosts() {
     if (posts.length > 0) {
         posts.forEach(post => {
             const postElement = `
-                <div class="post">
+                <div class="post" id="post-${post.id}">
                     <h2>${post.title || "Başlık Yok"}</h2>
                     <p>${post.content || "İçerik Yok"}</p>
                     <div class="post-interactions">
@@ -335,12 +335,30 @@ function myPosts() {
                         <span class="like-count">${post.likeCount || 0}</span>
                         <button class="comment-button">Comment</button>
                         <span class="comment-count">${post.commentCount || 0}</span>
+                        <button class="delete-button" onclick="deletePost('${post.id}')">Delete</button>  <!-- Delete butonuna event ekleme -->
                     </div>
                 </div>`;
             postsContainer.innerHTML += postElement; // Yeni postu ekle
         });
     } else {
         postsContainer.innerHTML = '<p>No saved posts available.</p>'; // Mesaj göster
+    }
+}
+// Delete fonksiyonu
+function deletePost(postId) {
+    if (confirm("Bu postu silmek istediğinize emin misiniz?")) {
+        fetch(`http://localhost:8000/api/v1/deletepost/${postId}`, {  // API endpoint'i kontrol et
+            method: 'DELETE',
+            credentials: 'include'  // Token'ı dahil etmek için
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Post silinemedi');
+            // Post başarıyla silindiyse, DOM'dan da kaldır
+            document.getElementById(`post-${postId}`).remove();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     }
 }
     function logoutaccount() {

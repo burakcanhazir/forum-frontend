@@ -9,18 +9,65 @@
 <body>
     <div class="post-container">
         <h1>User Post</h1>
-        <!-- Eğer gönderi yoksa kullanıcıya bilgi göster -->
         {{if not .Post.ID}}
             <p>No post found.</p>
         {{else}}
-            <!-- Tek bir gönderi göster -->
-            <div class="post">
+            <div class="post" data-post-id="{{.Post.ID}}">
                 <h2>{{.Post.Title}}</h2>
                 <p>{{.Post.Content}}</p>
                 <span>Post ID: {{.Post.ID}}</span>
-                <p>Likes: {{.Post.Likes.Int64}}</p> <!-- sql.NullInt64 kullanıyorsun, bu yüzden Null kontrolü gerekebilir -->
+            </div>
+            <div class="comment-section">
+                <h3>Leave a Comment:</h3>
+                <textarea id="comment" placeholder="Write your comment here..."></textarea>
+                <button id="submitComment">Submit</button>
             </div>
         {{end}}
     </div>
+
+    <script>
+        document.getElementById('submitComment').addEventListener('click', function() {
+            const commentText = document.getElementById('comment').value;
+            if (!commentText.trim()) {
+                alert("Please enter a comment before submitting.");
+                return;
+            }
+    
+            const postId = document.querySelector('.post').getAttribute('data-post-id');
+            console.log("Post ID,",postId)
+    
+            // Fetch isteği
+            fetch(`http://localhost:8000/api/v1/createcommit/${postId}`, { 
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({ content: commentText })               
+            })
+            
+            
+            .then(response => {
+                console.log("Response Status:", response.status);
+                if (response.ok) {
+                    return response.json();
+                } else if (response.status >= 400 && response.status < 500) {
+                    console.warn("Client-side error. Status:", response.status);
+                } else if (response.status >= 500) {
+                    console.warn("Server-side error. Status:", response.status);
+                }
+                throw new Error(`Failed to submit comment: ${response.status}`);
+            })
+            .then(data => {
+                alert("Comment submitted successfully!");
+                document.getElementById('comment').value = ''; // Yorum alanını temizle
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("An error occurred while submitting your comment: " + error.message);
+            });
+        });
+    </script>
+    
 </body>
 </html>
