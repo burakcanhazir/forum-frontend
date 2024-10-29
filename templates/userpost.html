@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Post</title>
-    <link rel="stylesheet" href="/style/styles.css">
+    <link rel="stylesheet" href="/style/userpost.css">
 </head>
 <body>
     <div class="post-container">
@@ -17,7 +17,13 @@
                 <p>{{.Post.Content}}</p>
                 <span>Post ID: {{.Post.ID}}</span>
             </div>
+
             <div class="comment-section">
+                <h3>Comments:</h3>
+                <div id="comment-list">
+                    <!-- Yorumlar buraya yüklenecek -->
+                </div>
+
                 <h3>Leave a Comment:</h3>
                 <textarea id="comment" placeholder="Write your comment here..."></textarea>
                 <button id="submitComment">Submit</button>
@@ -26,17 +32,50 @@
     </div>
 
     <script>
+        // Yorumları yüklemek için bir fonksiyon
+        function loadComments() {
+    const postId = document.querySelector('.post').getAttribute('data-post-id');
+    fetch(`http://localhost:8000/api/v1/getcommits/${postId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            // Eğer bir token gerekiyorsa, buraya ekleyin
+            'Authorization': 'Bearer YOUR_TOKEN_HERE'
+        },
+        credentials: 'include',
+    })
+    .then(response => {
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        return response.json();
+    })
+    .then(comments => {
+        console.log("Gelen Yorumlar:", comments); // Gelen veri burada kontrol edilecek
+        const commentList = document.getElementById('comment-list');
+        commentList.innerHTML = ''; // Eski yorumları temizle
+        
+        // Yorumları yükleme kısmı
+        comments.forEach(comment => {
+            const commentDiv = document.createElement('div');
+            commentDiv.classList.add('comment');
+            commentDiv.innerText = comment; // Eğer comment bir dizi ise burada yorumun içeriği
+            commentList.appendChild(commentDiv);
+        });
+    })
+    .catch(error => console.error("Error loading comments:", error));
+}
+
+
+        // Yorum gönderme işlemi
         document.getElementById('submitComment').addEventListener('click', function() {
             const commentText = document.getElementById('comment').value;
             if (!commentText.trim()) {
                 alert("Please enter a comment before submitting.");
                 return;
             }
-    
+
             const postId = document.querySelector('.post').getAttribute('data-post-id');
-            console.log("Post ID,",postId)
-    
-            // Fetch isteği
+            console.log("Post ID:", postId);
+
             fetch(`http://localhost:8000/api/v1/createcommit/${postId}`, { 
                 method: 'POST',
                 headers: {
@@ -45,8 +84,6 @@
                 credentials: 'include',
                 body: JSON.stringify({ content: commentText })               
             })
-            
-            
             .then(response => {
                 console.log("Response Status:", response.status);
                 if (response.ok) {
@@ -61,13 +98,16 @@
             .then(data => {
                 alert("Comment submitted successfully!");
                 document.getElementById('comment').value = ''; // Yorum alanını temizle
+                loadComments(); // Yorumları yeniden yükle
             })
             .catch(error => {
                 console.error("Error:", error);
                 alert("An error occurred while submitting your comment: " + error.message);
             });
         });
+
+        // Sayfa yüklendiğinde yorumları yükle
+        document.addEventListener('DOMContentLoaded', loadComments);
     </script>
-    
 </body>
 </html>

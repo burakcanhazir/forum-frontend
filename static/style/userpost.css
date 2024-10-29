@@ -1,0 +1,75 @@
+body {
+    display: flex;
+    justify-content: center; /* Ortalamak için */
+    align-items: center; /* Dikey ortalamak için */
+    height: 100vh; /* Tam ekran yüksekliği */
+    margin: 0;
+    background-color: #f4f4f4; /* Arka plan rengi */
+}
+
+.post-container {
+    width: 90%; /* Genişliği ayarla */
+    max-width: 600px; /* Maksimum genişlik */
+    background-color: white; /* Post alanı arka plan rengi */
+    padding: 20px; /* İçerik alanı */
+    border-radius: 10px; /* Köşeleri yuvarlat */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Gölgelendirme efekti */
+}
+
+.comment-section {
+    margin-top: 20px;
+    border: 1px solid #ccc; /* Yorum bölümünün etrafına sınır ekle */
+    padding: 10px;
+    border-radius: 5px; /* Köşeleri yuvarlat */
+    position: relative; /* Sürüklenebilir simge için pozisyonu ayarlama */
+}
+
+#comment-list {
+    margin-top: 10px;
+    max-height: 200px; /* Maksimum yükseklik */
+    overflow-y: auto; /* Taşma durumunda kaydırma çubuğu */
+}
+
+.comment {
+    background-color: #f9f9f9; /* Yorum arka plan rengi */
+    border: 1px solid #ddd; /* Yorumun etrafına sınır */
+    border-radius: 5px; /* Köşeleri yuvarlat */
+    padding: 10px;
+    margin-bottom: 10px; /* Yorumlar arasında boşluk */
+}
+
+textarea {
+    width: calc(100% - 30px); /* Yorum kutusunun genişliği */
+    height: 40px; /* Yorum kutusunun yüksekliği */
+    border-radius: 5px; /* Köşeleri yuvarlat */
+    border: 1px solid #ccc; /* Yorum kutusunun sınırı */
+    padding: 10px; /* İçerik ile sınır arasında boşluk */
+    resize: none; /* Boyut değiştirilmeyecek */
+}
+
+button {
+    margin-top: 10px; /* Butonun üstüne boşluk ekle */
+    padding: 10px 15px; /* Butonun içindeki boşluk */
+    border-radius: 5px; /* Butonun köşelerini yuvarla */
+    border: none; /* Butonun sınırını kaldır */
+    background-color: #007BFF; /* Buton arka plan rengi */
+    color: white; /* Buton yazı rengi */
+    cursor: pointer; /* Fare ile üzerine gelince el simgesi */
+}
+
+button:hover {
+    background-color: #0056b3; /* Buton üzerine gelince arka plan rengini değiştir */
+}
+
+.drag-handle {
+    position: absolute;
+    top: 10px;
+    right: 10px; /* Simgeyi kutunun sağ üst köşesine yerleştir */
+    cursor: grab; /* Sürükleme simgesi */
+    font-size: 18px; /* Simgenin boyutu */
+    user-select: none; /* Seçim yapılmasını engelle */
+}
+
+.drag-handle:active {
+    cursor: grabbing; /* Basılı tutulduğunda el simgesi değişir */
+}
