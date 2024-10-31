@@ -51,13 +51,9 @@
                     <h2>
                         <a href="/post/{{.PostID}}" onclick="handlePostClick(event, '{{.PostID}}')">{{.Title}}</a>
                     </h2>
-                    <p>{{.Content}}</p>
                     <p>{{.PostID}}</p>
                     <div class="post-interactions">
                         <button class="like-button" onclick="likePost('{{.PostID}}')">Like</button>
-                        
-                        <button class="comment-button">Comment</button>
-                        <span class="comment-count">0</span>
                     </div>
                 </div>
             {{else}}
