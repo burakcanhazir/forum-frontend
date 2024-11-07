@@ -7,25 +7,8 @@
     <link rel="stylesheet" href="/style/styles.css"> <!-- CSS dosyasını bağla -->
 </head>
 <body>
-    <div class="header">
-        <div class="button-container">
-            <!-- Form başlangıcı -->
-            <form id="categoryForm" onsubmit="return submitForm(event)">
-                <button class="nav-button" name="id" value="HTML">HTML</button>
-                <button class="nav-button" name="id" value="CSS">CSS</button>
-                <button class="nav-button" name="id" value="PYTHON">PYTHON</button>
-                <button class="nav-button" name="id" value="C">C</button>
-                <button class="nav-button" name="id" value="C#">C#</button>
-                <button class="nav-button" name="id" value="C++">C++</button>
-                <button class="nav-button" name="id" value="GO">GO</button>
-                <button class="nav-button" name="id" value="javascript">javascript</button>
-                <button class="nav-button" name="id" value="java">java</button>
-                <button class="nav-button" name="id" value="REACT">REACT</button>
-                <button class="nav-button" name="id" value="FLUTTER">FLUTTER</button>
-            </form>
-            <!-- Form bitişi -->
-        </div>
-
+    <div class="forumProject">
+        <div class="forum-title">ForumOFcoders</div>
         <div class="sign-in">
             <button class="account-button" onclick="showLogin()">Login</button>
             <button class="account-button" onclick="showRegister()">Register</button>
@@ -38,7 +21,29 @@
                 </div>
             </div>
         </div>
-        
+    </div>
+
+    <div class="header">
+        <div class="button-container">
+            <!-- Form başlangıcı -->
+            <form id="categoryForm" onsubmit="return submitForm(event)">
+                <button class="nav-button" name="id" value="HTML">HTML</button>
+                <button class="nav-button" name="id" value="CSS">CSS</button>
+                <button class="nav-button" name="id" value="PYTHON">PYTHON</button>
+                <button class="nav-button" name="id" value="C">C</button>
+                <button class="nav-button" name="id" value="C#">C#</button>
+                <button class="nav-button" name="id" value="cplus">cplus</button>
+                <button class="nav-button" name="id" value="GO">GO</button>
+                <button class="nav-button" name="id" value="javascript">javascript</button>
+                <button class="nav-button" name="id" value="java">java</button>
+                <button class="nav-button" name="id" value="REACT">REACT</button>
+                <button class="nav-button" name="id" value="FLUTTER">FLUTTER</button>
+                <button class="nav-button" name="id" value="PHP">PHP</button>
+                <button class="nav-button" name="id" value="RUST">RUST</button>
+                <button class="nav-button" name="id" value="CHAT">CHAT</button>
+            </form>
+            <!-- Form bitişi -->
+        </div>   
     </div>
      <a href="createpost" class="floating-btn">+</a>
     
@@ -51,7 +56,7 @@
                     <h2>
                         <a href="/post/{{.PostID}}" onclick="handlePostClick(event, '{{.PostID}}')">{{.Title}}</a>
                     </h2>
-                    <p>{{.PostID}}</p>
+                    
                     <div class="post-interactions">
                         <button class="like-button" onclick="likePost('{{.PostID}}')">Like</button>
                     </div>
@@ -227,8 +232,9 @@
                         <a href="/post/${post.id}" onclick="handlePostClick(event, '${post.id}')">
                             ${post.title || "Başlık Yok"}
                         </a>
+                        
                     </h2>
-                    <p>${post.content || "İçerik Yok"}</p>
+                    
                     <div class="post-interactions">
                         <button class="like-button" onclick="likePost('${post.id}')">Like</button>
                         <span class="like-count">${post.likeCount || 0}</span>
@@ -267,7 +273,7 @@
 
     function displayLikedPosts(posts) {
     const postsContainer = document.getElementById("posts");
-    postsContainer.innerHTML = "";  // Önceki içerikleri temizler
+    postsContainer.innerHTML = ""; // Önceki içerikleri temizler
 
     // Eğer posts null veya undefined ise, boş bir dizi oluştur
     if (!posts || !Array.isArray(posts)) {
@@ -281,8 +287,11 @@
         posts.forEach(post => {
             const postElement = `
                 <div class="post">
-                    <h2>${post.title || "Başlık Yok"}</h2>
-                    <p>${post.content || "İçerik Yok"}</p>
+                    <h2>
+                        <a href="/post/${post.id}" onclick="handlePostClick(event, '${post.id}')">
+                            ${post.title || "Başlık Yok"}
+                        </a>
+                    </h2>
                     <div class="post-interactions">
                         <button class="like-button" onclick="likePost('${post.id}')">Like</button>
                         <span class="like-count">${post.likeCount || 0}</span>
@@ -325,13 +334,14 @@ function myPosts() {
         posts.forEach(post => {
             const postElement = `
                 <div class="post" id="post-${post.id}">
-                    <h2>${post.title || "Başlık Yok"}</h2>
-                    <p>${post.content || "İçerik Yok"}</p>
+                    <h2>
+                        <a href="/post/${post.id}" onclick="handlePostClick(event, '${post.id}')">
+                            ${post.title || "Başlık Yok"}
+                        </a>
+                    </h2>
                     <div class="post-interactions">
                         <button class="like-button" onclick="likePost('${post.id}')">Like</button>
                         <span class="like-count">${post.likeCount || 0}</span>
-                        <button class="comment-button">Comment</button>
-                        <span class="comment-count">${post.commentCount || 0}</span>
                         <button class="delete-button" onclick="deletePost('${post.id}')">Delete</button>  <!-- Delete butonuna event ekleme -->
                     </div>
                 </div>`;

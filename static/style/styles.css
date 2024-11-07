@@ -1,10 +1,39 @@
+/* Genel body ayarları */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    align-items: stretch; /* Esnek genişlik sağlamak için */
+    justify-content: flex-start;
+    min-height: 100vh; /* Ekran yüksekliğine göre minimum yüksekliği ayarla */
+    width: 100%;
+    background-color: #f8f9fa;
+}
+
+/* Butonlar için stil */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.forumProject {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #077027;
+}
+/* Forum başlığı */
+.forum-title {
+    font-size: 30px;
+    font-weight: bold;
+    color: #333;
+    margin-left: 0;
+    text-align: left;
 }
 
 .header {
@@ -14,13 +43,10 @@ body {
     padding: 10px 20px;
     background-color: #f8f9fa;
     border-bottom: 1px solid #ddd;
+    position:relative;
+    text-align: center;
 }
 
-.button-container {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
 
 .nav-button, .account-button {
     padding: 10px 20px;
@@ -54,7 +80,9 @@ body {
     justify-content: center;
     padding: 20px;
     background-color: #f1f1f1;
+    width: 100%;
 }
+
 
 #posts {
     background-color: #fff;
@@ -62,6 +90,7 @@ body {
     border-radius: 5px;
     width: 100%;
     max-width: 800px;
+    box-sizing: border-box;
 }
 
 .post {
@@ -123,8 +152,6 @@ body {
     background-color: #dc3545;
     margin-top: 10px;
 }
-
-
 
 
 .Register-modal {
@@ -247,4 +274,38 @@ hesabım
     background-color: #0056b3;
 }
 
+
+/* Mobil cihazlar için stil ayarları */
+@media (max-width: 768px) {
+    body {
+        padding: 10px; /* Mobilde body'ye padding ekleyelim */
+        width: 100%; /* Body'nin genişliğini ekranın tamamı yapalım */
+        height: auto; /* Yüksekliği otomatik yapalım */
+    }
+}
+
+/* Orta boyut ekranlar için - tablet */
+@media (max-width: 1024px) {
+    body {
+        padding: 20px; /* Tablet için daha fazla padding */
+        width: 100%;
+        height: auto;
+    }
+}
+
+/* Büyük ekranlar için - masaüstü */
+@media (min-width: 1025px) {
+    body {
+      
+        margin:0; /* Mobilde body'ye padding ekleyelim */
+        width: 100%; /* Body'nin genişliğini ekranın tamamı yapalım */
+        height: auto; /* Yüksekliği otomatik yapalım */
+    }
+}
+#categoryForm {
+    justify-content: center; /* Yatayda ortalama */
+    align-items: center; /* Butonları dikeyde hizalar */
+    width: 100%;
+    
+}
 

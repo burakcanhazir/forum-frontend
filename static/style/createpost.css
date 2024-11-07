@@ -5,7 +5,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
+    min-width: 100vw;
+    box-sizing: border-box;
 }
 
 form {
@@ -44,7 +46,7 @@ textarea:focus {
 
 button {
     background-color: #007BFF;
-    color: white;
+    color: rgb(42, 33, 33);
     padding: 15px;
     border: none;
     border-radius: 5px;
@@ -71,16 +73,24 @@ button:hover {
     color: red;
 }
 .category-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px; /* Butonlar arasındaki boşluk */
     margin-top: 10px;
+    justify-content: flex-start;
 }
 
 .category-buttons button {
-    margin: 5px;
-    padding: 10px;
-    border: 1px solid #007BFF;
+    width: 60px; /* Sabit genişlik */
+    height: 60px; /* Sabit yükseklik (kare formu için) */
     background-color: #f0f0f0;
+    border: 1px solid #007BFF;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 12px; /* Daha küçük yazı boyutu */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .category-buttons button.selected {

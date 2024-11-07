@@ -73,3 +73,15 @@ button:hover {
 .drag-handle:active {
     cursor: grabbing; /* Basılı tutulduğunda el simgesi değişir */
 }
+
+
+.userid {
+    position: absolute;
+    top: 10px;
+    right: 10px; /* Sağ üst köşeye hizalamak için */
+    background-color: #007BFF; /* Arka plan rengi */
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 12px;
+}

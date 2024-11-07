@@ -34,10 +34,9 @@
             <p>No post found.</p>
         {{else}}
             <div class="post" data-post-id="{{.Post.ID}}">
+                <div class="userid">USERID: {{.Post.UserID}}</div>             
                 <h2>{{.Post.Title}}</h2>
-                <p>{{.Post.Content}}</p>
-                <p>USERID: {{.Post.UserID}}</p>
-                <span>Post ID: {{.Post.ID}}</span>
+                <p>{{.Post.Content}}</p>           
             </div>
 
             <div class="comment-section">
