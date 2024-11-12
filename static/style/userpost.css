@@ -8,6 +8,7 @@ body {
 }
 
 .post-container {
+    position: relative;
     width: 90%; /* Genişliği ayarla */
     max-width: 600px; /* Maksimum genişlik */
     background-color: white; /* Post alanı arka plan rengi */
@@ -17,6 +18,7 @@ body {
 }
 
 .comment-section {
+    position: relative;
     margin-top: 20px;
     border: 1px solid #ccc; /* Yorum bölümünün etrafına sınır ekle */
     padding: 10px;
@@ -32,7 +34,7 @@ body {
 
 .comment {
     background-color: #f9f9f9; /* Yorum arka plan rengi */
-    border: 1px solid #ddd; /* Yorumun etrafına sınır */
+    border: 1px solid #1a1818; /* Yorumun etrafına sınır */
     border-radius: 5px; /* Köşeleri yuvarlat */
     padding: 10px;
     margin-bottom: 10px; /* Yorumlar arasında boşluk */
@@ -78,10 +80,42 @@ button:hover {
 .userid {
     position: absolute;
     top: 10px;
-    right: 10px; /* Sağ üst köşeye hizalamak için */
+    right: 10px; /* Sağ üst köşeye hizalama */
     background-color: #007BFF; /* Arka plan rengi */
     color: white;
     padding: 5px 10px;
     border-radius: 3px;
     font-size: 12px;
 }
+
+.comment {
+    display: flex;
+    justify-content: space-between; /* İçeriği soldan sağa yerleştir */
+    align-items: center; /* Dikeyde ortalar */
+    margin-bottom: 10px;
+}
+
+.delete-button {
+    font-size: 18px; /* Çöp kutusu simgesinin boyutunu ayarlıyoruz */
+    padding: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #d9534f; /* Çöp kutusu simgesi kırmızı renkte olabilir */
+    transition: color 0.3s;
+}
+
+.delete-button:hover {
+    color: #c9302c; /* Hover durumu için renk değişimi */
+}
+
+
+#like-button i {
+    font-size: 20px;
+    margin-right: 8px;
+  }
+  
+  #like-button:hover i {
+    color: red;
+  }
+  

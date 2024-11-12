@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forum</title>
     <link rel="stylesheet" href="/style/styles.css"> <!-- CSS dosyasını bağla -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="forumProject">
@@ -13,11 +14,11 @@
             <button class="account-button" onclick="showLogin()">Login</button>
             <button class="account-button" onclick="showRegister()">Register</button>
             <div class="dropdown">
-                <button class="account-button">Hesabım</button>
+                <button class="account-button">Account</button>
                 <div class="dropdown-content">
-                    <button class="account-button" onclick="fetchLikedPosts()">Beğendiklerim</button> 
-                    <button class="account-button" onclick="myPosts()">Gönderilerim</button>
-                    <button class="account-button" onclick="logoutaccount()">Çıkış</button>
+                    <button class="account-button" onclick="fetchLikedPosts()">Liked</button> 
+                    <button class="account-button" onclick="myPosts()">MyPosts</button>
+                    <button class="account-button" onclick="logoutaccount()">Outss</button>
                 </div>
             </div>
         </div>
@@ -31,34 +32,36 @@
                 <button class="nav-button" name="id" value="CSS">CSS</button>
                 <button class="nav-button" name="id" value="PYTHON">PYTHON</button>
                 <button class="nav-button" name="id" value="C">C</button>
-                <button class="nav-button" name="id" value="C#">C#</button>
-                <button class="nav-button" name="id" value="cplus">cplus</button>
+                <button class="nav-button" name="id" value="CSHARP">C#</button>
+                <button class="nav-button" name="id" value="CPLUS">C++</button>
                 <button class="nav-button" name="id" value="GO">GO</button>
                 <button class="nav-button" name="id" value="javascript">javascript</button>
-                <button class="nav-button" name="id" value="java">java</button>
+                <button class="nav-button" name="id" value="JAVA">JAVA</button>
                 <button class="nav-button" name="id" value="REACT">REACT</button>
                 <button class="nav-button" name="id" value="FLUTTER">FLUTTER</button>
                 <button class="nav-button" name="id" value="PHP">PHP</button>
-                <button class="nav-button" name="id" value="RUST">RUST</button>
-                <button class="nav-button" name="id" value="CHAT">CHAT</button>
+                <button class="nav-button" name="id" value="RUST">RUST</button> 
+                <button class="nav-button" name="id" value="PERL">PERL</button> 
+                <button class="nav-button" name="id" value="swift">SWİFT</button>   
+                <button class="nav-button" name="id" value="ASSEMBLY">ASSEMBLY</button>        
+                <button class="nav-button" name="id" value="OTHER">OTHER</button>
             </form>
             <!-- Form bitişi -->
         </div>   
     </div>
      <a href="createpost" class="floating-btn">+</a>
-    
-
      <div class="content">
-        <h1>POSTS</h1>
+        <h1 class="custom-heading">posts for you...</h1>
         <div id="posts">
             {{range .Posts}}
                 <div class="post">
                     <h2>
-                        <a href="/post/{{.PostID}}" onclick="handlePostClick(event, '{{.PostID}}')">{{.Title}}</a>
+                        <a href="/post/{{.PostID}}" class="no-underline" onclick="handlePostClick(event, '{{.PostID}}')">{{.Title}}</a>
+
                     </h2>
                     
                     <div class="post-interactions">
-                        <button class="like-button" onclick="likePost('{{.PostID}}')">Like</button>
+                       
                     </div>
                 </div>
             {{else}}
@@ -229,17 +232,15 @@
             const postElement = `
                 <div class="post">
                     <h2>
-                        <a href="/post/${post.id}" onclick="handlePostClick(event, '${post.id}')">
-                            ${post.title || "Başlık Yok"}
+                        <a href="/post/${post.id}" class="no-underline" onclick="handlePostClick(event, '${post.id}')">
+                             ${post.title || "Başlık Yok"}
                         </a>
+
                         
                     </h2>
                     
                     <div class="post-interactions">
-                        <button class="like-button" onclick="likePost('${post.id}')">Like</button>
-                        <span class="like-count">${post.likeCount || 0}</span>
-                        <button class="comment-button">Comment</button>
-                        <span class="comment-count">${post.commentCount || 0}</span>
+                      
                     </div>
                 </div>`;
             postsContainer.innerHTML += postElement; // Yeni postu ekle
@@ -288,16 +289,10 @@
             const postElement = `
                 <div class="post">
                     <h2>
-                        <a href="/post/${post.id}" onclick="handlePostClick(event, '${post.id}')">
+                        <a href="/post/${post.id}" class="no-underline" onclick="handlePostClick(event, '${post.id}')">
                             ${post.title || "Başlık Yok"}
                         </a>
                     </h2>
-                    <div class="post-interactions">
-                        <button class="like-button" onclick="likePost('${post.id}')">Like</button>
-                        <span class="like-count">${post.likeCount || 0}</span>
-                        <button class="comment-button">Comment</button>
-                        <span class="comment-count">${post.commentCount || 0}</span>
-                    </div>
                 </div>`;
             postsContainer.innerHTML += postElement; // Yeni postu ekle
         });
@@ -335,14 +330,14 @@ function myPosts() {
             const postElement = `
                 <div class="post" id="post-${post.id}">
                     <h2>
-                        <a href="/post/${post.id}" onclick="handlePostClick(event, '${post.id}')">
+                        <a href="/post/${post.id}" class="no-underline" onclick="handlePostClick(event, '${post.id}')">
                             ${post.title || "Başlık Yok"}
                         </a>
                     </h2>
                     <div class="post-interactions">
-                        <button class="like-button" onclick="likePost('${post.id}')">Like</button>
-                        <span class="like-count">${post.likeCount || 0}</span>
-                        <button class="delete-button" onclick="deletePost('${post.id}')">Delete</button>  <!-- Delete butonuna event ekleme -->
+                        <button class="delete-button" onclick="deletePost('${post.id}')">
+                            <i class="fa fa-trash-alt"></i>
+                        </button>  <!-- Delete butonuna event ekleme -->
                     </div>
                 </div>`;
             postsContainer.innerHTML += postElement; // Yeni postu ekle
@@ -385,29 +380,7 @@ function deletePost(postId) {
         console.error('Error:', error);
     });
 } 
-function likePost(postId) {
-    const url = `http://localhost:8000/api/v1/${postId}/like`;
-    const data = { postId: postId };
 
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify(data),
-    })
-    .then(response => {
-        if (!response.ok) throw new Error('Like işlemi başarısız oldu.');
-        // Başarılı yanıtı işliyoruz
-        const likeCountElement = document.querySelector(`#post-${postId} .like-count`);
-        likeCountElement.textContent = parseInt(likeCountElement.textContent) + 1; // Like sayısını artırıyoruz
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Bir hata oluştu: ' + error.message);
-    });
-}
     </script>
 </body>
 </html>

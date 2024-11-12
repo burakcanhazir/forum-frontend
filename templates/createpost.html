@@ -17,21 +17,24 @@
         <br><br>
 
         <div class="category-buttons">
-            <button type="button" class="category-btn">HTML</button>
-            <button type="button" class="category-btn">CSS</button>
-            <button type="button" class="category-btn">Go</button>
-            <button type="button" class="category-btn">Python</button>
-            <button type="button" class="category-btn">cplus</button>
-            <button type="button" class="category-btn">Java</button>
-            <button type="button" class="category-btn">C#</button>
-            <button type="button" class="category-btn">C</button>
-            <button type="button" class="category-btn">PHP</button>
-            <button type="button" class="category-btn">javascript</button>
-            <button type="button" class="category-btn">RUST</button>
-            <button type="button" class="category-btn">FLUTTER</button>
-            <button type="button" class="category-btn">REACT</button>
-            <button type="button" class="category-btn">CHAT</button>
-        </div>
+            <button type="button" class="category-btn" value="HTML">HTML</button>
+            <button type="button" class="category-btn" value="CSS">CSS</button>
+            <button type="button" class="category-btn" value="Go">Go</button>
+            <button type="button" class="category-btn" value="Python">Python</button>
+            <button type="button" class="category-btn" value="cplus">C++</button>
+            <button type="button" class="category-btn" value="Java">Java</button>
+            <button type="button" class="category-btn" value="CSHARP">C#</button>
+            <button type="button" class="category-btn" value="C">C</button>
+            <button type="button" class="category-btn" value="PHP">PHP</button>
+            <button type="button" class="category-btn" value="JavaScript">JavaScript</button>
+            <button type="button" class="category-btn" value="Rust">Rust</button>
+            <button type="button" class="category-btn" value="Flutter">Flutter</button>
+            <button type="button" class="category-btn" value="React">React</button>
+            <button type="button" class="category-btn" value="Swift">Swift</button>
+            <button type="button" class="category-btn" value="Assembly">Assembly</button>
+            <button type="button" class="category-btn" value="Perl">Perl</button>
+            <button type="button" class="category-btn" value="Other">Other</button>
+        </div>      
         <br>
 
         <button type="submit">Create Post</button>
@@ -41,10 +44,10 @@
 
     <script>
 let selectedCategories = [];
-
 document.querySelectorAll('.category-btn').forEach(button => {
     button.addEventListener('click', () => {
-        const category = button.textContent.trim().toLowerCase().replace(/\s+/g, '');
+        // category değişkenini butonun value özelliğinden al
+        const category = button.value.toLowerCase();
 
         if (selectedCategories.includes(category)) {
             selectedCategories = selectedCategories.filter(item => item !== category);
@@ -57,6 +60,7 @@ document.querySelectorAll('.category-btn').forEach(button => {
         console.log('Selected Categories:', JSON.stringify(selectedCategories)); // ["html", "go"]
     });
 });
+
 
 document.getElementById('postForm').addEventListener('submit', async function(event) {
     event.preventDefault();

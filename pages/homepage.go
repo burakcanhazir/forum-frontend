@@ -8,9 +8,10 @@ import (
 )
 
 type Post struct {
-	PostID  string `json:"id"`
-	Title   string `json:"title"`
-	Content string `json:"content"`
+	PostID   string   `json:"id"`
+	Title    string   `json:"title"`
+	Content  string   `json:"content"`
+	Category []string `json:"category"`
 }
 
 // API'den postları çek

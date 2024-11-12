@@ -5,28 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Post</title>
     <link rel="stylesheet" href="/style/userpost.css">
-    <style>
-        /* Küçük ve sağ tarafa hizalı silme butonu */
-        .delete-button {
-            font-size: 12px;
-            padding: 2px 5px;
-            margin-left: 10px;
-            cursor: pointer;
-            float: right;
-            position: relative;
-            top: -15px;
-            right: -10px;
-        }
-
-        /* Yorumlar için stil */
-        .comment {
-            padding: 8px;
-            margin-bottom: 8px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            position: relative;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="post-container">
@@ -51,8 +30,41 @@
             </div>
         {{end}}
     </div>
+    <button id="like-button">
+        <i class="fa fa-heart"></i>
+        <span id="like-count">0</span>
+      </button>
 
     <script>
+        const postId = document.querySelector('.post').getAttribute('data-post-id');
+
+        document.getElementById('like-button').addEventListener('click', function() {
+        likePost(postId); // Kalp butonuna tıklanırsa likePost fonksiyonunu çağır
+    });
+
+        function likePost(postId) {
+            const url = `http://localhost:8000/api/v1/${postId}/like`; // API endpoint
+            const data = { postId: postId };
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify(data),
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Like işlemi başarısız oldu.');
+                // Başarılı yanıtı işliyoruz
+                alert('Post liked successfully!'); // Başarılı bir like işlemi sonucu bildirim
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Bir hata oluştu: ' + error.message);
+            });
+        }
+        
         // Yorumları yüklemek için bir fonksiyon
         function loadComments() {
             const postId = document.querySelector('.post').getAttribute('data-post-id');
@@ -77,11 +89,14 @@
                     const commentDiv = document.createElement('div');
                     commentDiv.classList.add('comment');
                     commentDiv.setAttribute('data-comment-id', comment.id); // Yorumun ID'si buraya atanıyor
+                    console.log("güzel",comment.id)
                     commentDiv.innerHTML = `
                         <p>${comment.content || comment}</p>
-                        <button class="delete-button" onclick="deleteComment(${comment.id})">Delete</button>
-                    `;
-                    
+                        <button class="delete-button" onclick="deleteComment('${postId}', '${comment.id}')">
+                            <i class="fa fa-trash-alt"></i>
+                        </button>
+                       
+                    `;             
                     commentList.appendChild(commentDiv);
                 });
 
@@ -89,10 +104,7 @@
             .catch(error => console.error("Error loading comments:", error));
         }
 
-function deleteComment(commentId) {
-    const postId = document.querySelector('.post').getAttribute('data-post-id');
-    
-    
+function deleteComment(postId,commentId) {
     fetch(`http://localhost:8000/api/v1/deletecommit/${postId}/${commentId}`, {
         method: 'DELETE',
         headers: {

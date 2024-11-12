@@ -99,6 +99,7 @@ body {
     margin: 10px 0;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
 .login-modal {
@@ -273,6 +274,54 @@ hesabım
 .floating-btn:hover {
     background-color: #0056b3;
 }
+/* Delete butonunun sağ tarafa hizalanması ve stil verilmesi için CSS ekleyelim */
+.post-interactions {
+    display: flex;
+    justify-content: flex-end; /* Butonu sağa hizalar */
+    margin-top: 10px;
+}
+
+.delete-button {
+    background: none;
+    border: none;
+    color: #dc3545; /* Kırmızı ton */
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    color: #a71c1c; /* Üzerine gelindiğinde koyulaşır */
+}
+a.no-underline {
+    text-decoration: none;
+  }
+  
+  a.no-underline:hover {
+    text-decoration: none;
+  }
+
+/* Başlık Konteyneri için düzeltmeler */
+.heading-container {
+    width: 100%;
+    text-align: left; /* Başlık sola hizalanacak */
+    padding-left: 0; /* Sol padding sıfırlanmış olmalı */
+}
+
+/* Başlık için stil */
+.custom-heading {
+    margin: 0; /* Sol ve sağ marginleri sıfırladık */
+    font-size: 24px;
+    font-family: 'Arial', sans-serif;
+    color: #0e2850;
+    font-weight: bold;
+    text-align: left; /* Yazıyı sola hizala */
+    width: auto; /* Genişlik ayarlarını özelleştir */
+    padding-left: 0; /* Sola padding eklenmişse, bunu sıfırlıyoruz */
+}
+
+
+  
+
 
 
 /* Mobil cihazlar için stil ayarları */
