@@ -1,0 +1,33 @@
+# Go için resmi imajı kullanıyoruz
+FROM golang:1.23.1-alpine AS builder
+
+# Çalışma dizinini belirle
+WORKDIR /app
+
+# Bağımlılık dosyalarını kopyala ve bağımlılıkları indir
+COPY go.mod go.sum ./
+RUN go mod download
+
+# Kodları ve diğer dosyaları kopyala
+COPY . .
+
+# Uygulamayı derle
+RUN go build -o forumfront .
+
+# Minimal bir çalışma ortamı imajı kullanıyoruz
+FROM alpine:latest
+RUN apk add --no-cache ca-certificates
+
+# Çalışma dizinini ayarla
+WORKDIR /root/
+
+# Derlenmiş dosyayı ve gerekli statik dosyaları kopyala
+COPY --from=builder /app/forumfront .
+COPY --from=builder /app/templates ./templates
+COPY --from=builder /app/static ./static
+
+# Uygulamanın dinleyeceği portu tanımla
+EXPOSE 8081
+
+# Uygulamayı başlat
+CMD ["./forumfront"]
