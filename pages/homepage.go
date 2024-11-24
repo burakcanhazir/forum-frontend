@@ -16,7 +16,7 @@ type Post struct {
 
 // API'den postları çek
 func fetchPosts() ([]Post, error) {
-	resp, err := http.Get("http://localhost:8000/api/v1/homepage")
+	resp, err := http.Get("http://backend:8000/api/v1/homepage") // backend = DOCKER'da çalışırıyor.  Localde çalışması için http://localhost:8000/api/v1/homepage  değişikliği gerek
 	if err != nil {
 		return nil, err
 	}
