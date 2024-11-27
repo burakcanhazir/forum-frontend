@@ -23,6 +23,9 @@
                 <div id="comment-list">
                     <!-- Yorumlar buraya yüklenecek -->
                 </div>
+                <button id="like-button">
+                    <i class="fa fa-heart"></i>
+                </button>
 
                 <h3>Leave a Comment:</h3>
                 <textarea id="comment" placeholder="Write your comment here..."></textarea>
@@ -30,10 +33,7 @@
             </div>
         {{end}}
     </div>
-    <button id="like-button">
-        <i class="fa fa-heart"></i>
-        <span id="like-count">0</span>
-      </button>
+  
 
     <script>
         const postId = document.querySelector('.post').getAttribute('data-post-id');
@@ -126,7 +126,6 @@ function deleteComment(postId,commentId) {
         alert("An error occurred while deleting the comment: " + error.message);
     });
 }
-
 
         // Yorum gönderme işlemi
         document.getElementById('submitComment').addEventListener('click', function() {

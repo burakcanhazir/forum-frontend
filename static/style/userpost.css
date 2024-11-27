@@ -4,17 +4,19 @@ body {
     align-items: center; /* Dikey ortalamak için */
     height: 100vh; /* Tam ekran yüksekliği */
     margin: 0;
-    background-color: #f4f4f4; /* Arka plan rengi */
+    background-color:#181818; /* Arka plan rengi */
 }
 
 .post-container {
+    color: white;
     position: relative;
     width: 90%; /* Genişliği ayarla */
     max-width: 600px; /* Maksimum genişlik */
-    background-color: white; /* Post alanı arka plan rengi */
+    background-color: #181818; /* Post alanı arka plan rengi */
     padding: 20px; /* İçerik alanı */
     border-radius: 10px; /* Köşeleri yuvarlat */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Gölgelendirme efekti */
+    border: 3px solid #ccc; /* Yorum bölümünün etrafına sınır ekle */
 }
 
 .comment-section {
@@ -54,13 +56,13 @@ button {
     padding: 10px 15px; /* Butonun içindeki boşluk */
     border-radius: 5px; /* Butonun köşelerini yuvarla */
     border: none; /* Butonun sınırını kaldır */
-    background-color: #007BFF; /* Buton arka plan rengi */
+    background-color: green; /* Buton arka plan rengi */
     color: white; /* Buton yazı rengi */
     cursor: pointer; /* Fare ile üzerine gelince el simgesi */
 }
 
 button:hover {
-    background-color: #0056b3; /* Buton üzerine gelince arka plan rengini değiştir */
+    background-color: #06571d; /* Buton üzerine gelince arka plan rengini değiştir */
 }
 
 .drag-handle {
@@ -81,11 +83,12 @@ button:hover {
     position: absolute;
     top: 10px;
     right: 10px; /* Sağ üst köşeye hizalama */
-    background-color: #007BFF; /* Arka plan rengi */
+    background-color: green; /* Arka plan rengi */
     color: white;
     padding: 5px 10px;
     border-radius: 3px;
     font-size: 12px;
+    
 }
 
 .comment {
@@ -93,6 +96,7 @@ button:hover {
     justify-content: space-between; /* İçeriği soldan sağa yerleştir */
     align-items: center; /* Dikeyde ortalar */
     margin-bottom: 10px;
+    color: black;
 }
 
 .delete-button {
@@ -109,13 +113,37 @@ button:hover {
     color: #c9302c; /* Hover durumu için renk değişimi */
 }
 
+#like-button {
+    position: absolute; /* Konumlama */
+    bottom: 10px; /* Kutunun altından mesafe */
+    right: 10px; /* Kutunun sağından mesafe */
+    background-color: white; /* Dairenin arka planı */
+    border: 2px solid #ccc; /* Dairenin sınırı */
+    border-radius: 100%; /* Daire şekli */
+    width: 35px; /* Dairenin genişliği */
+    height: 35px; /* Dairenin yüksekliği */
+    display: flex; /* İçeriği ortalamak için */
+    justify-content: center; /* Yatayda ortala */
+    align-items: center; /* Dikeyde ortala */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Hafif gölge efekti */
+    cursor: pointer; /* Tıklanabilirlik hissi */
+    transition: all 0.3s; /* Hover için geçiş efekti */
+}
+
+#like-button:hover {
+    background-color: #ffe6e6; /* Hover durumunda açık kırmızı arka plan */
+    border-color: red; /* Hover durumunda sınır rengi */
+}
 
 #like-button i {
-    font-size: 20px;
-    margin-right: 8px;
-  }
-  
-  #like-button:hover i {
-    color: red;
-  }
+    color: #ccc; /* Varsayılan kalp simge rengi */
+    font-size: 20px; /* Kalp simgesi boyutu */
+    transition: color 0.3s; /* Renk geçişi */
+}
+
+#like-button:hover i {
+    color: red; /* Hover durumunda kalp rengi */
+}
+
+
   

@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #181818;
     margin: 0;
     display: flex;
     justify-content: center;
@@ -11,12 +11,13 @@ body {
 }
 
 form {
-    background: #fff;
+    background: #181818;
     padding: 40px;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     max-width: 500px;
     width: 100%;
+    border: 3px solid #ccc
 }
 
 label {
@@ -35,6 +36,7 @@ textarea {
     border-radius: 5px;
     box-sizing: border-box;
     font-size: 16px;
+    
 }
 
 input[type="text"]:focus,
@@ -45,7 +47,7 @@ textarea:focus {
 }
 
 button {
-    background-color: #007BFF;
+    background-color: green;
     color: rgb(42, 33, 33);
     padding: 15px;
     border: none;
@@ -56,7 +58,7 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #0a6b05;
 }
 
 #responseMessage {
@@ -84,7 +86,7 @@ button:hover {
     width: 60px; /* Sabit genişlik */
     height: 60px; /* Sabit yükseklik (kare formu için) */
     background-color: #f0f0f0;
-    border: 1px solid #007BFF;
+    border: 2px solid white;
     border-radius: 5px;
     cursor: pointer;
     font-size: 12px; /* Daha küçük yazı boyutu */
@@ -94,7 +96,7 @@ button:hover {
 }
 
 .category-buttons button.selected {
-    background-color: #007BFF;
+    background-color: green;
     color: white;
 }
 
@@ -102,3 +104,16 @@ button:hover {
     background-color: #4CAF50; /* Yeşil arka plan */
     color: white;
 }
+
+form#postForm label[for="title"] {
+    color: white; /* Yazı rengini beyaz yap */
+    font-size: 16px; /* İsteğe bağlı: Yazı boyutunu ayarla */
+    font-weight: bold; /* İsteğe bağlı: Yazıyı kalın yap */
+}
+form#postForm label[for="content"] {
+    color: white; /* Yazı rengini beyaz yap */
+    font-size: 16px; /* İsteğe bağlı: Yazı boyutunu ayarla */
+    font-weight: bold; /* İsteğe bağlı: Yazıyı kalın yap */
+}
+
+

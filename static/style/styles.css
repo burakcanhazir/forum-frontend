@@ -9,7 +9,7 @@ body {
     justify-content: flex-start;
     min-height: 100vh; /* Ekran yüksekliğine göre minimum yüksekliği ayarla */
     width: 100%;
-    background-color: #f8f9fa;
+    background-color:#181818;
 }
 
 /* Butonlar için stil */
@@ -25,13 +25,13 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    background-color: #077027;
+    
 }
 /* Forum başlığı */
 .forum-title {
     font-size: 30px;
     font-weight: bold;
-    color: #333;
+    color: #f7f3f3;
     margin-left: 0;
     text-align: left;
 }
@@ -41,7 +41,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-color: #f8f9fa;
+   
     border-bottom: 1px solid #ddd;
     position:relative;
     text-align: center;
@@ -51,55 +51,55 @@ body {
 .nav-button, .account-button {
     padding: 10px 20px;
     border: none;
-    color: #fff;
+    
     cursor: pointer;
     border-radius: 5px;
 }
 
-.nav-button {
-    background-color: #007BFF;
-}
 
 .nav-button:hover {
-    background-color: #0056b3;
+    background-color: #a5a0a0;
 }
 
-.account-button {
-    background-color: #28a745;
-}
+
 
 .account-button:hover {
-    background-color: #218838;
+    background-color: #bfc0bf;
 }
 
 .content {
+    
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 20px;
-    background-color: #f1f1f1;
+    background-color:#181818;
     width: 100%;
 }
 
 
 #posts {
-    background-color: #fff;
+    
     padding: 20px;
     border-radius: 5px;
     width: 100%;
     max-width: 800px;
     box-sizing: border-box;
+
 }
 
 .post {
-    background-color: #fff;
-    padding: 15px;
+    
+    padding: 12px;
     margin: 10px 0;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     position: relative;
+   font-family:monospace;
+   border: 1px solid #ccc;
+   
 }
 
 .login-modal {
@@ -258,7 +258,7 @@ hesabım
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #007BFF;
+    background-color: #0caf2f;
     color: white;
     border-radius: 50%;
     width: 50px;
@@ -272,7 +272,7 @@ hesabım
 }
 
 .floating-btn:hover {
-    background-color: #0056b3;
+    background-color: #068943;
 }
 /* Delete butonunun sağ tarafa hizalanması ve stil verilmesi için CSS ekleyelim */
 .post-interactions {
@@ -311,12 +311,17 @@ a.no-underline {
 .custom-heading {
     margin: 0; /* Sol ve sağ marginleri sıfırladık */
     font-size: 24px;
-    font-family: 'Arial', sans-serif;
-    color: #0e2850;
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
     font-weight: bold;
     text-align: left; /* Yazıyı sola hizala */
     width: auto; /* Genişlik ayarlarını özelleştir */
     padding-left: 0; /* Sola padding eklenmişse, bunu sıfırlıyoruz */
+}
+
+.post h2 a {
+    color: green; /* Başlık rengini turuncuya ayarladık */
+    text-decoration: none; /* Alt çizgiyi kaldırmak için */
 }
 
 
