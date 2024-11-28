@@ -88,6 +88,8 @@ document.getElementById('postForm').addEventListener('submit', async function(ev
 
         if (response.ok) {
             document.getElementById('responseMessage').textContent = 'Post created successfully!';
+            // Başarılı post atma işleminden sonra anasayfaya yönlendirme
+            window.location.href = '/'; // Anasayfaya yönlendiriyoruz
         } else {
             const result = await response.json();
             document.getElementById('responseMessage').textContent = `Error: ${result.error || 'Failed to create post'}`;
@@ -96,6 +98,7 @@ document.getElementById('postForm').addEventListener('submit', async function(ev
         document.getElementById('responseMessage').textContent = 'An error occurred: ' + error.message;
     }
 });
+
 
     </script>
 </body>

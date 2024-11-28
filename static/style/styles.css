@@ -87,7 +87,6 @@ body {
     width: 100%;
     max-width: 800px;
     box-sizing: border-box;
-
 }
 
 .post {
@@ -101,6 +100,21 @@ body {
    border: 1px solid #ccc;
    
 }
+
+#posts p {
+    font-size: 20px;
+    color: #ff6347; /* Rengi kırmızımsı turuncuya değiştirir */
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+   font-family:monospace;
+   border: 1px solid #ccc;
+}
+
+
+
 
 .login-modal {
     display: none; /* Başlangıçta gizli */
@@ -325,7 +339,7 @@ a.no-underline {
 }
 
 
-  
+
 
 
 

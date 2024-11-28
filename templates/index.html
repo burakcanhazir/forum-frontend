@@ -49,26 +49,27 @@
             <!-- Form bitişi -->
         </div>   
     </div>
-     <a href="createpost" class="floating-btn">+</a>
-     <div class="content">
-        <h1 class="custom-heading">posts for you...</h1>
-        <div id="posts">
-            {{range .Posts}}
-                <div class="post">
-                    <h2>
-                        <a href="/post/{{.PostID}}" class="no-underline" onclick="handlePostClick(event, '{{.PostID}}')">{{.Title}}</a>
+    <a href="createpost" class="floating-btn">+</a>
+    <div class="content">
+       <h1 class="custom-heading">posts for you...</h1>
+       <div id="posts">
+           {{range .Posts}}
+               <div class="post">
+                   <h2>
+                       <a href="/post/{{.PostID}}" class="no-underline" onclick="handlePostClick(event, '{{.PostID}}')">{{.Title}}</a>
 
-                    </h2>
-                    
-                    <div class="post-interactions">
-                       
-                    </div>
-                </div>
-            {{else}}
-                <p>No posts available.</p>
-            {{end}}
-        </div>
-    </div>
+                   </h2>
+                   
+                   <div class="post-interactions">
+                      
+                   </div>
+               </div>
+           {{else}}
+           <p>No posts available.</p>
+
+           {{end}}
+       </div>
+   </div>
 
 
     <!-- Login Modal -->
@@ -100,6 +101,7 @@
     </div>
 
     <script>
+        
         
         function handlePostClick(event, postId) {
             event.preventDefault(); // Normal link davranışını engelle
