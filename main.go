@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"forumfront/pages"
+	"forumfrontend/pages"
 )
 
 func main() {
