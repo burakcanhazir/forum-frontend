@@ -30,7 +30,7 @@ func SelectedfetchPosts(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Belirtilen URL'ye istek yap, ID'yi kullanarak
-	url := fmt.Sprintf("http://localhost:8000/api/v1/getpost/%s", postID) // backend = DOCKER'da çalışırıyor.  Localde çalışması için http://localhost:8000/api/v1/getpost/%s", postID)  değişikliği gerek
+	url := fmt.Sprintf("http://backend:8000/api/v1/getpost/%s", postID) // for run ; backend = DOCKER  && localhost = local
 	fmt.Println("Fetching from URL:", url)
 
 	// API'ye GET isteği yap
