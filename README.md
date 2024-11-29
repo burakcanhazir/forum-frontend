@@ -1,4 +1,58 @@
 # FORUM-PROJECT
+A web platform for collaboration on programming languages and related technologies.
+
+## INTRODUCTION
+
+This project is a forum platform where users can share problems and solutions related to programming languages, algorithms, and software technologies. The project utilizes RESTful APIs for data sharing between users. The backend is developed using Go, while the frontend is created with HTML, CSS, and JavaScript. Docker can be used to easily access the project and run all the services.
+
+The project is divided into three main components:
+- **backend**: APIs written in Go
+- **frontend**: Interface created with HTML, CSS, and JS
+- **deploy**: Deployment operations using Docker
+
+## SETUP
+
+To run the project locally, follow the steps below:
+
+1. **Install Docker**: [Docker Installation Video](https://www.youtube.com/watch?v=iqqDU2crIEQ)
+2. **Download all repositories locally**:
+   - [Forum Frontend](https://github.com/burakcanhazir/forum-deploy) - Frontend code
+   - [Forum Backend](https://github.com/burakcanhazir/burak-forumend) - Backend code
+   - [Forum Deployment](https://github.com/burakcanhazir/burakforum) - Deployment and Docker configuration
+
+---
+
+### **Usage Section**
+The usage section is quite clear, but a few spelling errors and additional explanations could be added to make parts clearer.
+
+```markdown
+## USAGE
+
+1. **Backend Configuration**: 
+   Copy the content of the `.env.example` file in the backend repository.
+
+2. **Create .env File**: 
+   In the `forum-backend` folder, create a new `.env` file and configure it with the data you copied.
+
+3. **Start with Docker**: 
+   Navigate to the `docker-deployment` folder and run the following command in your terminal:
+   ```bash
+   docker-compose up --build
+
+## License
+
+This project is licensed under the MIT License - see the [License file](LICENSE) for details.
+
+## Contact
+
+If you have any questions or suggestions about the project, feel free to reach out via [hazirburakcan@gmail.com].
+
+## Authors
+
+- [Burakcan Hazir](https://github.com/burakcanhazir)
+
+
+# FORUM-PROJECT
 Programla dilleri ve benzer teknolojiler için yardımlaşma adını yapılmış bir web sitesi
 
 ## TANITIM
