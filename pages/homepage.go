@@ -2,8 +2,11 @@ package pages
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
+	"os"
 	"text/template"
 )
 
@@ -16,21 +19,45 @@ type Post struct {
 
 // API'den postları çek
 func fetchPosts() ([]Post, error) {
-	resp, err := http.Get("http://backend:8000/api/v1/homepage") // for run ; backend = DOCKER  && localhost = local
+	// Ortam değişkeninden backend URL'sini al
+	baseURL := os.Getenv("BACKEND_URL")
+	if baseURL == "" {
+		baseURL = "http://localhost:8000" // Varsayılan olarak localhost
+	}
+
+	// URL'yi oluştur
+	url := fmt.Sprintf("%s/api/v1/homepage", baseURL)
+	log.Println("Fetching from URL:", url)
+
+	// API'ye GET isteği yap
+	resp, err := http.Get(url)
 	if err != nil {
-		return nil, err
+		log.Printf("Error fetching posts: %v", err)
+		return nil, fmt.Errorf("failed to fetch posts: %w", err)
 	}
 	defer resp.Body.Close()
 
+	// HTTP yanıtının durum kodunu kontrol et
+	if resp.StatusCode != http.StatusOK {
+		log.Printf("Error: Received status code %d from backend", resp.StatusCode)
+		return nil, fmt.Errorf("received status code %d from backend", resp.StatusCode)
+	}
+
+	// JSON verisini çözümlemek için bir struct oluştur
 	var posts []Post
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return nil, err
+		log.Printf("Error reading response body: %v", err)
+		return nil, fmt.Errorf("failed to read response body: %w", err)
 	}
+
+	// JSON'u çözümle ve `posts` dilimlerine aktar
 	err = json.Unmarshal(body, &posts)
 	if err != nil {
-		return nil, err
+		log.Printf("Error unmarshalling JSON: %v", err)
+		return nil, fmt.Errorf("failed to unmarshal JSON: %w", err)
 	}
+
 	return posts, nil
 }
 

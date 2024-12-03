@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"text/template"
 )
 
@@ -29,22 +30,37 @@ func SelectedfetchPosts(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Belirtilen URL'ye istek yap, ID'yi kullanarak
-	url := fmt.Sprintf("http://backend:8000/api/v1/getpost/%s", postID) // for run ; backend = DOCKER  && localhost = local
+	// Ortam değişkeninden backend URL'sini al
+	baseURL := os.Getenv("BACKEND_URL")
+	if baseURL == "" {
+		baseURL = "http://localhost:8000" // Varsayılan olarak localhost
+	}
+
+	// URL'yi oluştur
+	url := fmt.Sprintf("%s/api/v1/getpost/%s", baseURL, postID)
 	fmt.Println("Fetching from URL:", url)
 
 	// API'ye GET isteği yap
 	resp, err := http.Get(url)
 	if err != nil {
+		log.Printf("Error fetching post: %v", err)
 		http.Error(w, "Failed to fetch post", http.StatusInternalServerError)
 		return
 	}
 	defer resp.Body.Close()
 
+	// HTTP yanıtının durum kodunu kontrol et
+	if resp.StatusCode != http.StatusOK {
+		log.Printf("Error: Received status code %d from backend", resp.StatusCode)
+		http.Error(w, "Failed to fetch post: Non-OK status code", http.StatusInternalServerError)
+		return
+	}
+
 	// JSON verisini çözümlemek için bir struct oluştur
 	var post SelectedPost
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
+		log.Printf("Error reading response body: %v", err)
 		http.Error(w, "Failed to read response body", http.StatusInternalServerError)
 		return
 	}
@@ -67,6 +83,7 @@ func SelectedfetchPosts(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := tmpl.Execute(w, data); err != nil {
+		log.Printf("Error rendering template: %v", err)
 		http.Error(w, "Failed to render template", http.StatusInternalServerError)
 		return
 	}
